@@ -1,0 +1,221 @@
+/*
+ * Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ */
+
+.ck.ck-list-styles-list {
+	display: grid;
+	width: 100%;
+}
+
+.ck-numbered-list-properties__reversed-order,
+.ck-numbered-list-properties__bracketed {
+	width: 100% !important;
+	display: flex !important;
+}
+
+
+@counter-style decimal-bracketed {
+	system: extends decimal;
+	prefix: '(';
+	suffix: ')';
+}
+
+@counter-style lower-latin-bracketed {
+	system: extends lower-latin;
+	prefix: '(';
+	suffix: ')';
+}
+
+@counter-style lower-roman-bracketed {
+	system: extends lower-roman;
+	prefix: '(';
+	suffix: ')';
+}
+
+@counter-style upper-latin-bracketed {
+	system: extends upper-latin;
+	prefix: '(';
+	suffix: ')';
+}
+
+@counter-style upper-roman-bracketed {
+	system: extends upper-roman;
+	prefix: '(';
+	suffix: ')';
+}
+
+@counter-style decimal-leading-zero-bracketed {
+	system: extends decimal-leading-zero;
+	prefix: '(';
+	suffix: ')';
+}
+
+
+@counter-style diamond-hollow {
+	system: cyclic;
+	symbols: '◇';
+	suffix: '';
+}
+
+@counter-style diamond-filled {
+	system: cyclic;
+	symbols: '◆';
+	suffix: '';
+}
+
+@counter-style square-hollow {
+	system: cyclic;
+	symbols: '□';
+	suffix: '';
+}
+
+
+@counter-style square-solid {
+	system: cyclic;
+	symbols: '■';
+	suffix: '';
+}
+
+@counter-style circle-hollow {
+	system: cyclic;
+	symbols: '○';
+	suffix: '';
+}
+
+@counter-style circle-solid {
+	system: cyclic;
+	symbols: '●';
+	suffix: '';
+}
+
+ul li::marker {
+	text-align: left !important;
+	text-align-last: left !important;
+	text-indent: 10px !important;
+}
+
+
+@counter-style blank {
+	system: cyclic;
+	symbols: ' ';
+	suffix: ' ';
+}
+
+.ck-content {
+	ul[style*='list-style-type:diamond-hollow;'] > li:before {
+		content: var(--hollow-diamond);
+		position: absolute;
+		left: -2px;
+		top: -1px;
+		width: 4px;
+	}
+
+	ul[style*='list-style-type:diamond-filled;'] > li:before {
+		content: var(--filled-diamond);
+		position: absolute;
+		left: -2px;
+		top: -1px;
+		width: 4px;
+	}
+
+	ul[style*='list-style-type:square-hollow;'] > li:before {
+		content: var(--hollow-square);
+		position: absolute;
+		left: -2px;
+		top: -2px;
+		width: 3px;
+	}
+
+	ul[style*='list-style-type:circle-solid;'] > li:before {
+		content: var(--filled-circle);
+		position: absolute;
+		left: -2px;
+		top: -2px;
+		width: 3px;
+	}
+
+	ul[style*='list-style-type:square-solid;'] > li:before {
+		content: var(--filled-square);
+		position: absolute;
+		left: -2px;
+		top: -2px;
+		width: 3px;
+	}
+
+	ul[style*='list-style-type:circle-hollow;'] > li:before {
+		content: var(--hollow-circle);
+		position: absolute;
+		left: -2px;
+		top: -2px;
+		width: 3px;
+	}
+
+	ul[style*='list-style-type:blank;'] > li:before {
+		content: '';
+		display: none
+	}
+}
+
+.component ol,
+.component ul {
+	padding-left: 1rem;
+}
+
+.component ol ol,
+.component ol ul,
+.component ul ol,
+.component ul ul {
+	margin: 0;
+}
+
+:root {
+	--ck-list-style-button-size: 34px;
+}
+
+.ck.ck-list-styles-list {
+	grid-template-columns: repeat( 4, auto );
+	row-gap: var(--ck-spacing-medium);
+	column-gap: var(--ck-spacing-medium);
+	padding: var(--ck-spacing-large);
+
+	& .ck-button {
+		width: var(--ck-list-style-button-size);
+		height: var(--ck-list-style-button-size);
+		padding: 0;
+		margin: 0;
+		box-sizing: content-box;
+
+		& .ck-icon {
+			width: var(--ck-list-style-button-size);
+			height: var(--ck-list-style-button-size);
+		}
+	}
+}
+
+.ck.ck-icon {
+	width: var(--ck-icon-size);
+	height: var(--ck-icon-size);
+
+	font-size: .8333350694em;
+	cursor: inherit;
+	will-change: transform;
+
+	& * {
+		cursor: inherit;
+	}
+
+	&.ck-icon_inherit-color {
+		color: inherit;
+
+		& * {
+			color: inherit;
+
+			&:not([fill]) {
+				fill: currentColor;
+			}
+		}
+	}
+}
+
+

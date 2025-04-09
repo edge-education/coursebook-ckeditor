@@ -1,0 +1,20 @@
+
+.ck .table-template-view {
+	border-top: #2B2E34;
+	padding: 10px;
+
+	h3 {
+		width: 100%;
+		font-size: 16px;
+		text-align: center;
+	}
+}
+
+.ck .table-template-group {
+	max-height: 150px;
+	overflow: auto;
+
+	.table-template-item {
+		padding: 5px;
+	}
+}

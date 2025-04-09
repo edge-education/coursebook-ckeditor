@@ -1,0 +1,109 @@
+.math-wrapper {
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100vh;
+	box-sizing: border-box;
+	z-index: 101;
+}
+
+.math-wrapper .overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background-color: rgb(248 248 250 / 1);
+	padding: 1rem;
+	opacity: 0.9;
+	box-sizing: border-box;
+}
+
+.math-wrapper .math-modal {
+	position: relative;
+	width: 400px;
+	box-sizing: border-box;
+	box-shadow: 0 20px 60px -2px rgba(27, 33, 58, 0.4);
+	border-radius: 0.375rem;
+	border-style: none;
+	background-color: rgb(255 255 255 / 1);
+	padding: 20px;
+}
+
+.math-wrapper .math-modal h3 {
+	margin-bottom: 20px;
+	font-size: 1.5rem;
+	line-height: 2rem;
+	font-weight: 700;
+	color: rgb(29 59 109 / 1) !important;
+}
+
+.math-wrapper .cb-close {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	cursor: pointer;
+}
+
+.math-wrapper .apply {
+	cursor: pointer;
+	border-radius: 0.375rem;
+	padding: 0.625rem 1rem;
+	font-size: 0.875rem;
+	line-height: 1.5rem;
+	background-color: rgb(29 59 109 / 1);
+	font-family: 'Barlow', serif;
+	transition-duration: 200ms;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	color: #fff;
+	width: 100%;
+}
+
+.math-wrapper .apply:hover {
+	background-color: rgb(24 49 90 / 1);
+}
+
+.mfe-wrapper {
+	width: 100%;
+	border-radius: 0.375rem;
+	border-width: 1px;
+	border-color: rgb(213 213 213 / 1);
+	margin-bottom: 10px;
+}
+
+.math-wrapper .toggle {
+	margin-bottom: 10px;
+	font-size: 14px;
+	color: #1d3b6d;
+	cursor: pointer;
+}
+
+.math-wrapper textarea {
+	position: relative;
+	margin-top: 1px;
+	margin-bottom: 20px;
+	box-sizing: border-box;
+	display: none;
+	width: 100%;
+	border-radius: 0.375rem;
+	border-width: 1px;
+	--tw-border-opacity: 1;
+	border-color: rgb(213 213 213 / 1);
+	background-color: transparent;
+	padding: 0.875rem 3rem 0.5rem 1rem;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	font-weight: 400;
+	--tw-text-opacity: 1;
+	color: rgb(57 57 57 / 1);
+	outline: 2px solid transparent;
+	outline-offset: 2px;
+}
+
+.math-wrapper textarea.active {
+	display: block
+}

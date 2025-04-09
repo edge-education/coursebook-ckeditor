@@ -1,0 +1,25 @@
+.ck-content figure.image {
+	display: block;
+	clear: both;
+	text-align: left;
+	margin: 0.9em auto;
+	min-width: 100%;
+	padding: 0 2px;
+	margin-block-start: 0;
+	margin-block-end: 1em;
+}
+
+.ck-content figure.image * {
+	pointer-events: none;
+	width: 100%
+}
+
+.ck-content figure.image p {
+	margin-bottom: 0;
+}
+
+.ck-content figure.image figcaption {
+	display: block;
+	background-color: transparent;
+	pointer-events: none;
+}
