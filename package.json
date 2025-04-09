@@ -1,12 +1,17 @@
 {
-    "name": "ckeditor5-custom-build",
-    "author": "CKSource",
+    "name": "coursebook-ckeditor",
+    "author": "EDGE Development",
     "description": "A custom CKEditor 5 build made by the CKEditor 5 online builder.",
     "version": "0.0.1",
+    "homepage": "http://github.com/edge-education/coursebook-ckeditor",
     "license": "SEE LICENSE IN LICENSE.md",
     "private": true,
     "main": "./build/ckeditor.js",
     "types": "./build/ckeditor.d.ts",
+    "repositary": {
+        "type": "git",
+        "url": "http://github.com/edge-education/coursebook-ckeditor.git"
+    },
     "dependencies": {
         "@ckeditor/ckeditor5-alignment": "40.1.0",
         "@ckeditor/ckeditor5-autoformat": "40.1.0",
