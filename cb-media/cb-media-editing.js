@@ -15,7 +15,7 @@ export default class CbMediaEditing extends Plugin {
 
         schema.register('cbMedia', {
             inheritAllFrom: '$blockObject',
-            allowAttributes: ['src', 'caption', 'source', 'extraClasses', 'hideMeta'],
+            allowAttributes: ['src', 'caption', 'source', 'extraClasses'],
         });
     }
 
@@ -47,10 +47,13 @@ export default class CbMediaEditing extends Plugin {
                     .filter((child) => child.is('element', 'figcaption') && child.hasClass('caption'))
                     .map((captionEl) => captionEl?.getChild(0)?.data || '');
 
+                const allClasses = Array.from(viewElement.getClassNames()).filter(c => c !== 'image');
+
                 return modelWriter.createElement('cbMedia', {
                     src,
                     source: captions[0] || '',
                     caption: captions[1] || '',
+                    extraClasses: allClasses.join(' '),
                 });
             },
         });
