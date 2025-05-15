@@ -160,6 +160,11 @@ class Editor extends InlineEditor {
                     classes: true,
                     styles: true,
                 },
+                {
+                    name: 'figure',
+                    classes: ['image', 'hide-metadata'],
+                    attributes: ['data-settings'],
+                },
             ],
         },
         link: {
