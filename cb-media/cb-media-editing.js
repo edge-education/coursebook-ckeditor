@@ -15,7 +15,7 @@ export default class CbMediaEditing extends Plugin {
 
         schema.register('cbMedia', {
             inheritAllFrom: '$blockObject',
-            allowAttributes: ['src', 'caption', 'source'],
+            allowAttributes: ['src', 'caption', 'source', 'extraClasses', 'hideMeta'],
         });
     }
 
@@ -59,12 +59,21 @@ export default class CbMediaEditing extends Plugin {
             const src = modelItem.getAttribute('src');
             const source = modelItem.getAttribute('source');
             const caption = modelItem.getAttribute('caption');
+            const extraClasses = modelItem.getAttribute('extraClasses');
+            const hideMeta = modelItem.getAttribute('hideMeta');
+            const classList = ['image'];
 
-            const figure = writer.createContainerElement('figure', {
-                class: 'image',
+            if (hideMeta) classList.push('hide-metadata')
+
+            if (extraClasses) classList.push(...extraClasses.split(' '));
+
+            const attributes = {
+                class: classList.join(' '),
                 contenteditable: 'false',
                 draggable: 'false',
-            });
+            };
+
+            const figure = writer.createContainerElement('figure', attributes);
 
             const image = writer.createEmptyElement('img', {
                 src,

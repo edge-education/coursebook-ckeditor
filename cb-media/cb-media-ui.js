@@ -18,9 +18,11 @@ export default class CbMediaUi extends Plugin {
                 if (window.bus) {
                     window.bus.openMediaSelectionFromEditor().then(item => {
                         if (item) {
-                            const { caption, file } = item.model;
+                            const { caption, file, metadata } = item.model;
 
-                            editor.execute('cb-media', { src: file.url, caption, source: file.source });
+                            const hideMeta = metadata && metadata.hide_caption ? metadata.hide_caption : false
+
+                            editor.execute('cb-media', { src: file.url, caption, source: file.source, hideMeta });
                         }
                     });
                 }

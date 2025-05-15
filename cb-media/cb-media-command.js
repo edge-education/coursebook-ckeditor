@@ -1,7 +1,7 @@
 import Command from '@ckeditor/ckeditor5-core/src/command';
 
 export default class CbMediaCommand extends Command {
-    execute({ src, source, caption }) {
+    execute({ src, source, caption, hideMeta }) {
         const editor = this.editor;
 
         editor.model.change((writer) => {
@@ -9,6 +9,7 @@ export default class CbMediaCommand extends Command {
                 src,
                 source,
                 caption,
+                hideMeta
             });
 
             editor.model.insertObject(image, null, null, { findOptimalPosition: 'auto' });
