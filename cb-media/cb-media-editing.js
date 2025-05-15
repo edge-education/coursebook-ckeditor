@@ -15,7 +15,7 @@ export default class CbMediaEditing extends Plugin {
 
         schema.register('cbMedia', {
             inheritAllFrom: '$blockObject',
-            allowAttributes: ['src', 'caption', 'source'],
+            allowAttributes: ['src', 'caption', 'source', 'extraClasses'],
         });
     }
 
@@ -47,10 +47,13 @@ export default class CbMediaEditing extends Plugin {
                     .filter((child) => child.is('element', 'figcaption') && child.hasClass('caption'))
                     .map((captionEl) => captionEl?.getChild(0)?.data || '');
 
+                const allClasses = Array.from(viewElement.getClassNames()).filter(c => c !== 'image');
+
                 return modelWriter.createElement('cbMedia', {
                     src,
                     source: captions[0] || '',
                     caption: captions[1] || '',
+                    extraClasses: allClasses.join(' '),
                 });
             },
         });
@@ -59,12 +62,19 @@ export default class CbMediaEditing extends Plugin {
             const src = modelItem.getAttribute('src');
             const source = modelItem.getAttribute('source');
             const caption = modelItem.getAttribute('caption');
+            const extraClasses = modelItem.getAttribute('extraClasses');
 
-            const figure = writer.createContainerElement('figure', {
-                class: 'image',
+            const classList = ['image'];
+
+            if (extraClasses) classList.push(...extraClasses.split(' '));
+
+            const attributes = {
+                class: classList.join(' '),
                 contenteditable: 'false',
                 draggable: 'false',
-            });
+            };
+
+            const figure = writer.createContainerElement('figure', attributes);
 
             const image = writer.createEmptyElement('img', {
                 src,
