@@ -63,8 +63,10 @@ export default class CbMediaEditing extends Plugin {
             const source = modelItem.getAttribute('source');
             const caption = modelItem.getAttribute('caption');
             const extraClasses = modelItem.getAttribute('extraClasses');
-
+            const hideMeta = modelItem.getAttribute('hideMeta');
             const classList = ['image'];
+
+            if (hideMeta) classList.push('hide-metadata')
 
             if (extraClasses) classList.push(...extraClasses.split(' '));
 
