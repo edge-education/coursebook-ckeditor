@@ -15,7 +15,7 @@ export default class CbMediaEditing extends Plugin {
 
         schema.register('cbMedia', {
             inheritAllFrom: '$blockObject',
-            allowAttributes: ['src', 'caption', 'source', 'extraClasses'],
+            allowAttributes: ['src', 'caption', 'source', 'extraClasses', 'hideMeta'],
         });
     }
 
