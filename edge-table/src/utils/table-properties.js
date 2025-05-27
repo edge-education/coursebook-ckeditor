@@ -93,7 +93,7 @@ export function getNormalizedDefaultProperties(config, options = {}) {
         normalizedConfig.padding = '';
     }
     if (options.includeVerticalAlignmentProperty && !normalizedConfig.verticalAlignment) {
-        normalizedConfig.verticalAlignment = 'middle';
+        normalizedConfig.verticalAlignment = '';
     }
     if (options.includeHorizontalAlignmentProperty && !normalizedConfig.horizontalAlignment) {
         normalizedConfig.horizontalAlignment = options.isRightToLeftContent ? 'right' : 'left';
