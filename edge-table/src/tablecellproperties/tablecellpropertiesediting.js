@@ -241,7 +241,7 @@ export default class TableCellPropertiesEditing extends Plugin {
         enableVerticalAlignmentProperty(schema, conversion, defaultTableCellProperties.verticalAlignment);
         editor.commands.add(
             'tableCellVerticalAlignment',
-            new TableCellVerticalAlignmentCommand(editor, defaultTableCellProperties.verticalAlignment)
+            new TableCellVerticalAlignmentCommand(editor, '')
         );
     }
 }

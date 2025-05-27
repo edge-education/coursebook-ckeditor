@@ -331,7 +331,7 @@ export interface TableCellPropertiesOptions {
     /**
      * The default `verticalAlignment` of the table cell.
      *
-     * @default 'middle'
+     * @default ''
      */
     verticalAlignment?: string;
     /**

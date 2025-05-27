@@ -699,7 +699,6 @@ export default class TableCellPropertiesView extends View {
             toolbar: verticalAlignmentToolbar,
             labels: this._verticalAlignmentLabels,
             propertyName: 'verticalAlignment',
-            defaultValue: this.options.defaultTableCellProperties.verticalAlignment,
         });
         return {
             horizontalAlignmentToolbar,
