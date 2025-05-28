@@ -37,10 +37,20 @@ export interface StyleValues {
  * @param defaultBorder.width The default `borderWidth` value.
  */
 export declare function upcastBorderStyles(conversion: Conversion, viewElementName: string, modelAttributes: StyleValues, defaultBorder: StyleValues): void;
+
+export declare function upcastBorderDirectionalStyles(conversion: Conversion, viewElementName: string, modelAttributes: StyleValues, defaultBorder: StyleValues, direction: string): void;
 /**
  * Conversion helper for downcasting an attribute to a style.
  */
 export declare function downcastAttributeToStyle(conversion: Conversion, options: {
+    modelElement: string;
+    modelAttribute: string;
+    styleName: string;
+}): void;
+/**
+ * Conversion helper for downcasting an attribute to a style.
+ */
+export declare function downcastDirectionalAttributeToStyle(conversion: Conversion, options: {
     modelElement: string;
     modelAttribute: string;
     styleName: string;

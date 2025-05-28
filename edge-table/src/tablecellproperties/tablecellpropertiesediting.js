@@ -7,7 +7,11 @@
  */
 import { Plugin } from 'ckeditor5/src/core';
 import { addBackgroundRules, addBorderRules, addPaddingRules } from 'ckeditor5/src/engine';
-import { downcastAttributeToStyle, upcastBorderStyles } from '../converters/tableproperties';
+import {
+    downcastAttributeToStyle, downcastDirectionalAttributeToStyle,
+    upcastBorderDirectionalStyles,
+    upcastBorderStyles
+} from '../converters/tableproperties';
 import TableEditing from '../tableediting';
 import TableCellWidthEditing from '../tablecellwidth/tablecellwidthediting';
 import TableCellPaddingCommand from './commands/tablecellpaddingcommand';
@@ -102,21 +106,21 @@ export default class TableCellPropertiesEditing extends Plugin {
             new TableCellBorderStyleCommand(editor, defaultTableCellProperties.borderStyle)
         );
         editor.commands.add(
-            'tableCellBorderColor',
-            new TableCellBorderColorCommand(editor, defaultTableCellProperties.borderColor)
-        );
-        editor.commands.add(
             'tableCellBorderWidth',
             new TableCellBorderWidthCommand(editor, defaultTableCellProperties.borderWidth)
+        );
+        editor.commands.add(
+            'tableCellBorderColor',
+            new TableCellBorderColorCommand(editor, defaultTableCellProperties.borderColor)
         );
 
         enableBorderDirectionalProperties(
             schema,
             conversion,
             {
-                color: defaultTableCellProperties.borderTopColor,
                 style: defaultTableCellProperties.borderTopStyle,
                 width: defaultTableCellProperties.borderTopWidth,
+                color: defaultTableCellProperties.borderTopColor,
             },
             'Top'
         );
@@ -125,21 +129,21 @@ export default class TableCellPropertiesEditing extends Plugin {
             new TableCellBorderTopStyleCommand(editor, defaultTableCellProperties.borderTopStyle)
         );
         editor.commands.add(
-            'tableCellBorderTopColor',
-            new TableCellBorderTopColorCommand(editor, defaultTableCellProperties.borderTopColor)
-        );
-        editor.commands.add(
             'tableCellBorderTopWidth',
             new TableCellBorderTopWidthCommand(editor, defaultTableCellProperties.borderTopWidth)
+        );
+        editor.commands.add(
+            'tableCellBorderTopColor',
+            new TableCellBorderTopColorCommand(editor, defaultTableCellProperties.borderTopColor)
         );
 
         enableBorderDirectionalProperties(
             schema,
             conversion,
             {
-                color: defaultTableCellProperties.borderRightColor,
                 style: defaultTableCellProperties.borderRightStyle,
                 width: defaultTableCellProperties.borderRightWidth,
+                color: defaultTableCellProperties.borderRightColor,
             },
             'Right'
         );
@@ -160,9 +164,9 @@ export default class TableCellPropertiesEditing extends Plugin {
             schema,
             conversion,
             {
-                color: defaultTableCellProperties.borderBottomColor,
                 style: defaultTableCellProperties.borderBottomStyle,
                 width: defaultTableCellProperties.borderBottomWidth,
+                color: defaultTableCellProperties.borderBottomColor,
             },
             'Bottom'
         );
@@ -183,9 +187,9 @@ export default class TableCellPropertiesEditing extends Plugin {
             schema,
             conversion,
             {
-                color: defaultTableCellProperties.borderLeftColor,
                 style: defaultTableCellProperties.borderLeftStyle,
                 width: defaultTableCellProperties.borderLeftWidth,
+                color: defaultTableCellProperties.borderLeftColor,
             },
             'Left'
         );
@@ -285,29 +289,33 @@ function enableBorderProperties(schema, conversion, defaultBorder) {
 function enableBorderDirectionalProperties(schema, conversion, defaultBorder, direction) {
     const modelAttributes = {
         width: `tableCellBorder${direction}Width`,
-        color: `tableCellBorder${direction}Color`,
         style: `tableCellBorder${direction}Style`,
+        color: `tableCellBorder${direction}Color`,
     };
     schema.extend('tableCell', {
         allowAttributes: Object.values(modelAttributes),
     });
-    upcastBorderStyles(conversion, 'td', modelAttributes, defaultBorder);
-    upcastBorderStyles(conversion, 'th', modelAttributes, defaultBorder);
-    downcastAttributeToStyle(conversion, {
+    upcastBorderDirectionalStyles(conversion, 'td', modelAttributes, defaultBorder,direction.toLowerCase());
+    upcastBorderDirectionalStyles(conversion, 'th', modelAttributes, defaultBorder,direction.toLowerCase());
+    downcastDirectionalAttributeToStyle(conversion, {
         modelElement: 'tableCell',
         modelAttribute: modelAttributes.style,
-        styleName: `border-${direction.toLowerCase()}-style`,
+        styleName: `border-style`,
+        direction: direction.toLowerCase()
     });
-    downcastAttributeToStyle(conversion, {
-        modelElement: 'tableCell',
-        modelAttribute: modelAttributes.color,
-        styleName: `border-${direction.toLowerCase()}-color`,
-    });
-    downcastAttributeToStyle(conversion, {
+    downcastDirectionalAttributeToStyle(conversion, {
         modelElement: 'tableCell',
         modelAttribute: modelAttributes.width,
-        styleName: `border-${direction.toLowerCase()}-width`,
+        styleName: `border-width`,
+        direction: direction.toLowerCase()
     });
+    downcastDirectionalAttributeToStyle(conversion, {
+        modelElement: 'tableCell',
+        modelAttribute: modelAttributes.color,
+        styleName: `border-color`,
+        direction: direction.toLowerCase()
+    });
+
 }
 
 /**
