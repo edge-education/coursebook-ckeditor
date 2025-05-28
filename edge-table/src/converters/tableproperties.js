@@ -88,17 +88,91 @@ export function upcastBorderStyles(conversion, viewElementName, modelAttributes,
             color: reduceBoxSidesValue(normalizedBorder.color),
             width: reduceBoxSidesValue(normalizedBorder.width)
         };
-        if (reducedBorder.style !== defaultBorder.style) {
+        if (reducedBorder.style !== defaultBorder.style)
             conversionApi.writer.setAttribute(modelAttributes.style, reducedBorder.style, modelElement);
-        }
-        if (reducedBorder.color !== defaultBorder.color) {
+
+        if (reducedBorder.color !== defaultBorder.color)
             conversionApi.writer.setAttribute(modelAttributes.color, reducedBorder.color, modelElement);
-        }
-        if (reducedBorder.width !== defaultBorder.width) {
+
+        if (reducedBorder.width !== defaultBorder.width)
             conversionApi.writer.setAttribute(modelAttributes.width, reducedBorder.width, modelElement);
-        }
     }));
 }
+export function upcastBorderDirectionalStyles(conversion, viewElementName, modelAttributes, defaultBorder, direction) {
+    conversion.for('upcast').add(dispatcher =>
+        dispatcher.on('element:' + viewElementName, (evt, data, conversionApi) => {
+            if (!data.modelRange) return;
+
+            const stylePrefix = `border-${direction}`;
+
+            const stylesToCheck = [
+                `${stylePrefix}-width`,
+                `${stylePrefix}-style`,
+                `${stylePrefix}-color`
+            ];
+
+            let stylesToConsume = stylesToCheck.filter(styleName => data.viewItem.hasStyle(styleName));
+
+            // Fallback to `border` or directional shorthand if none of the expected ones are set
+            if (!stylesToConsume.length) {
+                const fallbackStyle = data.viewItem.hasStyle(stylePrefix)
+                    ? stylePrefix
+                    : (data.viewItem.hasStyle('border') ? 'border' : null);
+
+                if (fallbackStyle) stylesToConsume = [fallbackStyle];
+            }
+
+            if (!stylesToConsume.length) return;
+
+            const matchedStyles = stylesToConsume.filter(styleName =>
+                conversionApi.consumable.test(data.viewItem, { style: styleName })
+            );
+
+            if (!matchedStyles.length) return;
+
+            matchedStyles.forEach(styleName =>
+                conversionApi.consumable.consume(data.viewItem, { style: styleName })
+            );
+
+            const modelElement = [...data.modelRange.getItems({ shallow: true })].pop();
+
+            // Try getting individual styles
+            let style = data.viewItem.getStyle(`${stylePrefix}-style`);
+            let width = data.viewItem.getStyle(`${stylePrefix}-width`);
+            let color = data.viewItem.getStyle(`${stylePrefix}-color`);
+
+            // If any of them are missing, try falling back to parsing the shorthand
+            if (!style || !color || !width) {
+                const fallback = data.viewItem.getStyle(stylePrefix) || data.viewItem.getStyle('border');
+                if (fallback) {
+                    const parsed = parseBorderShorthand(fallback);
+                    style = style || parsed.style;
+                    width = width || parsed.width;
+                    color = color || parsed.color;
+                }
+            }
+
+            if (style && style !== defaultBorder.style)
+                conversionApi.writer.setAttribute(modelAttributes.style, style, modelElement);
+
+            if (width && width !== defaultBorder.width)
+                conversionApi.writer.setAttribute(modelAttributes.width, width, modelElement);
+
+            if (color && color !== defaultBorder.color)
+                conversionApi.writer.setAttribute(modelAttributes.color, color, modelElement);
+        })
+    );
+}
+
+// Simple border shorthand parser: e.g. "1px solid hsl(0, 75%, 60%)"
+function parseBorderShorthand(borderValue) {
+    const match = borderValue.match(/^([\d.]+(?:px|em|rem|%)?)\s+([a-zA-Z]+)\s+(.*)$/);
+    if (!match) return {};
+    const [width, style, color] = match;
+    return { width, style, color };
+}
+
+
 /**
  * Conversion helper for downcasting an attribute to a style.
  */
@@ -117,6 +191,44 @@ export function downcastAttributeToStyle(conversion, options) {
         })
     });
 }
+
+export function downcastDirectionalAttributeToStyle(conversion, options) {
+    const { modelElement, modelAttribute, styleName, direction } = options;
+
+    conversion.for('downcast').attributeToAttribute({
+        model: {
+            name: modelElement,
+            key: modelAttribute
+        },
+        view: (modelAttributeValue, { writer: viewWriter }) => {
+            if (typeof modelAttributeValue === 'object') {
+                const styles = {};
+                for (const dir in modelAttributeValue) {
+                    if (modelAttributeValue.hasOwnProperty(dir)) {
+                        const cssStyleName = `border-${dir}-${styleName.split('-')[1]}`;
+
+                        styles[cssStyleName] = modelAttributeValue[dir];
+                    }
+                }
+                return {
+                    key: 'style',
+                    value: styles
+                };
+            } else {
+                // Single value
+                const cssStyleName = direction ? `border-${direction}-${styleName.split('-')[1]}` : styleName;
+
+                return {
+                    key: 'style',
+                    value: {
+                        [cssStyleName]: modelAttributeValue
+                    }
+                };
+            }
+        }
+    });
+}
+
 /**
  * Conversion helper for downcasting attributes from the model table to a view table (not to `<figure>`).
  */
@@ -137,6 +249,7 @@ export function downcastTableAttribute(conversion, options) {
         }
     }));
 }
+
 /**
  * Reduces the full top, right, bottom, left object to a single string if all sides are equal.
  * Returns original style otherwise.
