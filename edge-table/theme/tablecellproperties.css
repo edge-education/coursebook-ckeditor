@@ -26,3 +26,12 @@
 		}
 	}
 }
+
+
+.border-applied {
+	svg {
+		path {
+			stroke: #2977ff
+		}
+	}
+}
