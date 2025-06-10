@@ -479,6 +479,9 @@ export default class TableCellPropertiesView extends View {
 
                 return buttonValue === valueToCompare;
             });
+
+            button.bind('class').to(this, getPropertyForDirection(buttonValue), (value) =>  isBorderStyleSet(value) ? 'border-applied' : '');
+
             button.on('execute', () => {
                 this['borderDirection'] = buttonValue;
 
@@ -842,4 +845,20 @@ export default class TableCellPropertiesView extends View {
 
 function isBorderStyleSet(value) {
     return value !== 'none';
+}
+
+const getPropertyForDirection = (direction) => {
+    switch (direction) {
+        case 'top':
+            return 'borderTopStyle';
+        case 'right':
+            return 'borderRightStyle';
+        case 'bottom':
+            return 'borderBottomStyle';
+        case 'left':
+            return 'borderLeftStyle';
+        case 'full':
+        default:
+            return 'borderStyle';
+    }
 }
