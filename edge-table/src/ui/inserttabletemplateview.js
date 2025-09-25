@@ -32,7 +32,13 @@ export default class InsertTableTemplateView extends View {
                     children: 'Choose from available templates...',
                     on: {
                         click: bind.to(() => {
-                            this.fire('openTableTemplateSelection');
+                            if (window.bus) {
+                                window.bus.openTableTemplateSelection().then(template => {
+                                    if (template) {
+                                        this.fire('openTableTemplateSelection', template);
+                                    }
+                                });
+                            }
                         }),
                     },
                 },
