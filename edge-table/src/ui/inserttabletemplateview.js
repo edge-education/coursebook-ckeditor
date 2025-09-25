@@ -6,6 +6,7 @@
  * @module table/ui/inserttabletemplateview
  */
 import { View } from 'ckeditor5/src/ui';
+import tableIcon from '../../theme/icons/table.svg';
 import '../../theme/inserttabletemplate.css';
 
 export default class InsertTableTemplateView extends View {
@@ -22,14 +23,10 @@ export default class InsertTableTemplateView extends View {
             children: [
                 {
                     tag: 'h3',
-                    children: 'Select a Template',
-                },
-                {
-                    tag: 'div',
                     attributes: {
                         class: ['ck', 'table-template-trigger'],
                     },
-                    children: 'Choose from available templates...',
+                    children: 'Open table templates',
                     on: {
                         click: bind.to(() => {
                             if (window.bus) {
@@ -50,5 +47,17 @@ export default class InsertTableTemplateView extends View {
 
     render() {
         super.render();
+
+        // Add the table icon to the h3 element
+        const h3Element = this.element.querySelector('h3.ck.table-template-trigger');
+        if (h3Element) {
+            // Create icon element
+            const iconElement = document.createElement('span');
+            iconElement.classList.add('ck', 'table-template-icon');
+            iconElement.innerHTML = tableIcon;
+
+            // Append icon to the right of the text
+            h3Element.appendChild(iconElement);
+        }
     }
 }
