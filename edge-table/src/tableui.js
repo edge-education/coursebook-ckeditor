@@ -62,8 +62,8 @@ export default class TableUI extends Plugin {
                 insertTableView = new InsertTableView(locale);
                 insertTableTemplateView = new InsertTableTemplateView(locale);
 
-                dropdownView.panelView.children.add(insertTableView);
                 dropdownView.panelView.children.add(insertTableTemplateView);
+                dropdownView.panelView.children.add(insertTableView);
 
                 insertTableView.delegate('execute-grid').to(dropdownView);
                 insertTableTemplateView.delegate('openTableTemplateSelection').to(dropdownView);
