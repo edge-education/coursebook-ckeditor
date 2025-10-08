@@ -62,18 +62,20 @@ export default class TableUI extends Plugin {
                 insertTableView = new InsertTableView(locale);
                 insertTableTemplateView = new InsertTableTemplateView(locale);
 
-                dropdownView.panelView.children.add(insertTableView);
                 dropdownView.panelView.children.add(insertTableTemplateView);
+                dropdownView.panelView.children.add(insertTableView);
 
                 insertTableView.delegate('execute-grid').to(dropdownView);
-                insertTableTemplateView.delegate('execute-template').to(dropdownView);
+                insertTableTemplateView.delegate('openTableTemplateSelection').to(dropdownView);
 
                 dropdownView.on('execute-grid', () => {
                     editor.execute('insertTable', { rows: insertTableView.rows, columns: insertTableView.columns });
                     editor.editing.view.focus();
                 });
-                dropdownView.on('execute-template', (event, templateHtml) => {
-                    editor.execute('insertTableTemplate', templateHtml);
+                dropdownView.on('openTableTemplateSelection', () => {
+                    // This will trigger the modal for template selection
+                    // The actual template insertion will happen from the modal
+                    editor.fire('openTableTemplateSelection');
                     editor.editing.view.focus();
                 });
             });
