@@ -29,8 +29,8 @@ import TableToolbar from '../edge-table/src/tabletoolbar';
 import TextWrap from '../text-wrap/TextWrapPlugin';
 import { DocumentList, DocumentListProperties, TodoDocumentList } from '../edge-list/';
 declare class Editor extends InlineEditor {
-    static builtinPlugins: (typeof Equations | typeof TextWrap | typeof Alignment | typeof Autoformat | typeof BlockQuote | typeof Bold | typeof CloudServices | typeof DataFilter | typeof DocumentList | typeof DocumentListProperties | typeof Essentials | typeof FontBackgroundColor | typeof FontColor | typeof FontFamily | typeof FontSize | typeof Heading | typeof HorizontalLine | typeof Indent | typeof Italic | typeof Link | typeof RemoveFormat | typeof SelectAll | typeof SpecialCharactersEssentials | typeof Strikethrough | typeof Subscript | typeof Superscript | typeof TodoDocumentList | typeof Underline | typeof Table | typeof TableCaption | typeof TableCellProperties | typeof TableColumnResize | typeof TableProperties | typeof TableToolbar)[];
-    static defaultConfig: EditorConfig;
+    static readonly builtinPlugins: (typeof Equations | typeof TextWrap | typeof Alignment | typeof Autoformat | typeof BlockQuote | typeof Bold | typeof CloudServices | typeof DataFilter | typeof DocumentList | typeof DocumentListProperties | typeof Essentials | typeof FontBackgroundColor | typeof FontColor | typeof FontFamily | typeof FontSize | typeof Heading | typeof HorizontalLine | typeof Indent | typeof Italic | typeof Link | typeof RemoveFormat | typeof SelectAll | typeof SpecialCharactersEssentials | typeof Strikethrough | typeof Subscript | typeof Superscript | typeof TodoDocumentList | typeof Underline | typeof Table | typeof TableCaption | typeof TableCellProperties | typeof TableColumnResize | typeof TableProperties | typeof TableToolbar)[];
+    static readonly defaultConfig: EditorConfig;
     constructor(element: HTMLElement, config: EditorConfig);
     private removeIdAttributes;
 }
