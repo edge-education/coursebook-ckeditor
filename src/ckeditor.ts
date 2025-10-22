@@ -51,7 +51,7 @@ import { DocumentList, DocumentListProperties, TodoDocumentList } from '../edge-
 // See https://ckeditor.com/docs/ckeditor5/latest/installation/plugins/installing-plugins.html for details.
 
 class Editor extends InlineEditor {
-    public static override builtinPlugins = [
+    public static override readonly builtinPlugins = [
         Alignment,
         AutoLink,
         Autoformat,
@@ -106,8 +106,7 @@ class Editor extends InlineEditor {
     ];
 
     // @ts-ignore
-    // @ts-ignore
-    public static override defaultConfig: EditorConfig = {
+    public static override readonly defaultConfig: EditorConfig = {
         toolbar: {
             items: [
                 'heading',
@@ -147,11 +146,14 @@ class Editor extends InlineEditor {
                 'redo',
             ],
         },
+
         language: 'en',
+
         // @ts-ignore
         table: {
             contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableCellProperties', 'tableProperties'],
         },
+
         htmlSupport: {
             allow: [
                 {
@@ -167,10 +169,12 @@ class Editor extends InlineEditor {
                 },
             ],
         },
+
         link: {
             addTargetToExternalLinks: true,
-            defaultProtocol: 'http://',
+            defaultProtocol: 'https://',
         },
+
         list: {
             properties: {
                 styles: true,
@@ -178,6 +182,23 @@ class Editor extends InlineEditor {
                 reversed: true,
                 bracketed: true,
             },
+        },
+
+        fontFamily: {
+            options: [
+                'default',
+                'Arial, Helvetica, sans-serif',
+                'Courier New, Courier, monospace',
+                'Georgia, serif',
+                'KaTeX_Main, Times New Roman, serif',
+                'KaTeX_Math, Times New Roman, serif',
+                'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                'Myriad Pro, Myriad, Helvetica, Arial, sans-serif',
+                'Tahoma, Geneva, sans-serif',
+                'Times New Roman, Times, serif',
+                'Trebuchet MS, Helvetica, sans-serif',
+                'Verdana, Geneva, sans-serif',
+            ],
         },
     };
 
@@ -192,7 +213,7 @@ class Editor extends InlineEditor {
                 try {
                     const modifiedHtml = this.removeIdAttributes(pastedHtml);
 
-                    this.model.change((writer) => {
+                    this.model.change(() => {
                         // Create a fragment from the modified HTML
                         const viewFragment = this.data.processor.toView(modifiedHtml);
                         const modelFragment = this.data.toModel(viewFragment);
@@ -204,7 +225,7 @@ class Editor extends InlineEditor {
                     // Prevent the default paste behavior since we have handled it
                     evt.stop();
                 } catch (error) {
-                    console.error('Error handling clipboard input:', error);
+                    console.error('Error-handling clipboard input:', error);
                 }
             }
         });
@@ -216,9 +237,9 @@ class Editor extends InlineEditor {
         tempDiv.innerHTML = html;
 
         const elementsWithId = tempDiv.querySelectorAll('[id]');
-        elementsWithId.forEach((element) => {
+        for (const element of elementsWithId) {
             element.removeAttribute('id');
-        });
+        }
 
         return tempDiv.innerHTML;
     }
