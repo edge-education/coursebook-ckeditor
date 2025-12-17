@@ -115,7 +115,7 @@ export default class ColorInputView extends View {
                         class: [
                             'ck',
                             'ck-input-color__button__preview__no-color-indicator',
-                            bind.if('value', 'ck-hidden', value => value != '')
+                            bind.if('value', 'ck-hidden', value => value != '' && value != 'unset')
                         ]
                     }
                 }]
@@ -175,7 +175,7 @@ export default class ColorInputView extends View {
         const locale = this.locale;
         const t = locale.t;
         const removeColorButton = new ButtonView(locale);
-        const defaultColor = this.options.defaultColorValue || '';
+        const defaultColor = this.options.defaultColorValue || 'unset';
         const removeColorButtonLabel = defaultColor ? t('Restore default') : t('Remove color');
         removeColorButton.class = 'ck-input-color__remove-color';
         removeColorButton.withText = true;
