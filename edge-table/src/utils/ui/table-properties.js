@@ -177,6 +177,10 @@ export function fillToolbar(options) {
  * ```ts
  * const defaultColors = [
  *   {
+ *     color: 'transparent',
+ *     label: 'Clear',
+ *   },
+ *   {
  *     color: 'hsl(0, 0%, 0%)',
  *     label: 'Black'
  *   },
@@ -241,6 +245,10 @@ export function fillToolbar(options) {
  * ```
  */
 export const defaultColors = [
+    {
+        color: 'transparent',
+        label: 'Clear',
+    },
     {
         color: 'hsl(0, 0%, 0%)',
         label: 'Black',
