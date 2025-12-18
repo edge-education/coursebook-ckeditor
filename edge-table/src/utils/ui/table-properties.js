@@ -86,7 +86,7 @@ export function presetFieldValidator(value) {
 }
 
 /**
- * Returns `true` when the passed value is an empty string, a number without a unit or a valid CSS length expression.
+ * Returns `true` when the passed value is an empty string, a number without a unit, or a valid CSS length expression.
  * Otherwise, `false` is returned.
  *
  * See {@link module:engine/view/styles/utils~isLength}.
@@ -177,8 +177,9 @@ export function fillToolbar(options) {
  * ```ts
  * const defaultColors = [
  *   {
- *     color: 'transparent',
- *     label: 'Clear',
+ *     color: 'rgba(0, 0, 0, 0)',
+ *     label: 'No colour',
+ *     hasBorder: true
  *   },
  *   {
  *     color: 'hsl(0, 0%, 0%)',
@@ -202,6 +203,10 @@ export function fillToolbar(options) {
  *     hasBorder: true
  *   },
  *   {
+ *     color: 'hsl(0, 65%, 30%)',
+ *     label: 'Maroon',
+ *   },
+ *   {
  *     color: 'hsl(0, 75%, 60%)',
  *     label: 'Red'
  *   },
@@ -210,8 +215,20 @@ export function fillToolbar(options) {
  *     label: 'Orange'
  *   },
  *   {
+ *     color: 'hsl(30, 60%, 85%)',
+ *     label: 'Beige',
+ *   },
+ *   {
  *     color: 'hsl(60, 75%, 60%)',
  *     label: 'Yellow'
+ *   },
+ *   {
+ *     color: 'hsl(30, 60%, 35%)',
+ *     label: 'Brown',
+ *   },
+ *   {
+ *     color: 'hsl(30, 45%, 45%)',
+ *     label: 'Sepia',
  *   },
  *   {
  *     color: 'hsl(90, 75%, 60%)',
@@ -246,8 +263,9 @@ export function fillToolbar(options) {
  */
 export const defaultColors = [
     {
-        color: 'transparent',
-        label: 'Clear',
+        color: 'rgba(0, 0, 0, 0)',
+        label: 'No colour',
+        hasBorder: true,
     },
     {
         color: 'hsl(0, 0%, 0%)',
@@ -271,12 +289,28 @@ export const defaultColors = [
         hasBorder: true,
     },
     {
+        color: 'hsl(0, 65%, 30%)',
+        label: 'Maroon',
+    },
+    {
         color: 'hsl(0, 75%, 60%)',
         label: 'Red',
     },
     {
+        color: 'hsl(30, 60%, 35%)',
+        label: 'Brown',
+    },
+    {
+        color: 'hsl(30, 45%, 45%)',
+        label: 'Sepia',
+    },
+    {
         color: 'hsl(30, 75%, 60%)',
         label: 'Orange',
+    },
+    {
+        color: 'hsl(30, 60%, 85%)',
+        label: 'Beige',
     },
     {
         color: 'hsl(60, 75%, 60%)',
@@ -329,13 +363,13 @@ export const defaultColors = [
  * Usage:
  *
  * ```ts
- * const colorInputCreator = getLabeledColorInputCreator( {
+ * const colorInputCreator = getLabeledColorInputCreator({
  *   colorConfig: [ ... ],
  *   columns: 3,
- * } );
+ * });
  *
- * const labeledInputView = new LabeledFieldView( locale, colorInputCreator );
- * console.log( labeledInputView.view ); // A color input instance.
+ * const labeledInputView = new LabeledFieldView(locale, colorInputCreator);
+ * console.log(labeledInputView.view); // A color input instance.
  * ```
  *
  * @internal
@@ -370,7 +404,7 @@ export function getLabeledColorInputCreator(options) {
 
 /**
  * A simple helper method to detect number strings.
- * I allows full number notation, so omitting 0 is not allowed:
+ * It allows full number notation, so omitting 0 is not allowed:
  */
 function isNumberString(value) {
     const parsedValue = parseFloat(value);

@@ -2,7 +2,7 @@
     "name": "coursebook-ckeditor",
     "author": "EDGE Development",
     "description": "A custom CKEditor 5 build made by the CKEditor 5 online builder.",
-    "version": "0.0.19",
+    "version": "0.0.20",
     "homepage": "https://github.com/edge-education/coursebook-ckeditor",
     "license": "SEE LICENSE IN LICENSE.md",
     "private": true,
@@ -57,6 +57,7 @@
     },
     "scripts": {
         "build": "webpack --mode production",
-        "postbuild": "tsc --declaration --declarationDir build --stripInternal --emitDeclarationOnly"
+        "postbuild": "tsc --declaration --declarationDir build --stripInternal --emitDeclarationOnly",
+        "prepare": "npm run build && npm run postbuild"
     }
 }
